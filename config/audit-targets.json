@@ -1,0 +1,22 @@
+{
+  "description": "ONLY audit repos/URLs you own. Add your GitHub repos or deployed demos.",
+  "repos": [
+    {
+      "name": "jiosaavn-api",
+      "github": "googlesgit/jiosaavn-api",
+      "local_path": null,
+      "notes": "Set local_path if cloned, e.g. ~/projects/jiosaavn-api"
+    },
+    {
+      "name": "soniq-proxy",
+      "github": "googlesgit/soniq-proxy",
+      "local_path": null
+    },
+    {
+      "name": "playtheworld",
+      "github": "googlesgit/playtheworld",
+      "local_path": null
+    }
+  ],
+  "urls": []
+}

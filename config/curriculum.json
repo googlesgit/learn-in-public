@@ -1,0 +1,27 @@
+{
+  "learn_topics": [
+    "JavaScript event loop and microtasks",
+    "TypeScript generics and utility types",
+    "HTTP caching headers and CDN behavior",
+    "Redis caching patterns",
+    "REST vs GraphQL tradeoffs",
+    "WebSockets vs SSE",
+    "OAuth 2.0 and refresh tokens",
+    "SQL indexes and query plans",
+    "Docker multi-stage builds",
+    "GitHub Actions secrets and environments",
+    "Rate limiting algorithms (token bucket, sliding window)",
+    "Web Audio API basics",
+    "CORS and preflight requests",
+    "Error handling and retries with exponential backoff",
+    "Structured logging and correlation IDs"
+  ],
+  "case_study_themes": [
+    "Design a music streaming search API at scale",
+    "Design a rate-limited public API proxy",
+    "Design real-time playlist collaboration",
+    "Design offline-first PWA for a web player",
+    "Design idempotent webhook processing",
+    "Design multi-region deployment for a Node API"
+  ]
+}

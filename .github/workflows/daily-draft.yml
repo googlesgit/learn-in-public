@@ -1,0 +1,46 @@
+name: Daily draft (needs review)
+
+on:
+  schedule:
+    - cron: "0 14 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate draft
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          python3 scripts/generate_draft.py | tee /tmp/gen.out
+          echo "TRACK=$(grep '^TRACK=' /tmp/gen.out | tail -1 | cut -d= -f2)" >> "$GITHUB_ENV"
+          echo "DATE=$(grep '^DATE=' /tmp/gen.out | tail -1 | cut -d= -f2)" >> "$GITHUB_ENV"
+
+      - name: Open pull request (no auto-merge)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BRANCH="draft/${DATE}-${TRACK}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add notes case-studies audits examples || true
+          if git diff --staged --quiet; then
+            echo "No file changes to commit."
+            exit 0
+          fi
+          git commit -m "draft(${TRACK}): ${DATE}"
+          git push --set-upstream origin "$BRANCH"
+          gh pr create \
+            --title "draft(${TRACK}): ${DATE} — review required" \
+            --body "Automated draft. **Do not merge without human review.** See [REVIEW.md](REVIEW.md)." \
+            --label "needs-review" \
+            --base main
